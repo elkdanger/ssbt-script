@@ -1,0 +1,45 @@
+#!/usr/local/bin/python3
+
+import click
+from subprocess import call
+import os
+from lazyme.string import color_str
+
+@click.group()
+def cli():
+	pass
+
+def getLogbackFile():
+	logConfigPath = os.path.join(os.getcwd(), "conf", "logback-test.xml")
+
+	if os.path.exists(logConfigPath):
+		return logConfigPath
+	else:
+		return None
+
+@cli.command('test-only')
+@click.option("--no-watch", help = "Disables file watching", is_flag = True)
+@click.option("-m", "--memory", help = "Memory setting for running sbt (default is 3072 Mb)", default = 3072)
+@click.argument('specs', nargs=-1)
+def testOnly(no_watch, specs, memory):
+	"""Tests only the specified specs"""
+	cmd = "test-only" if no_watch else "~test-only" 
+	call_cmd = ["sbt", "-mem " + str(memory)]
+
+	configPath = getLogbackFile()
+
+	if configPath != None:
+		click.echo("Using logback configuration from " + configPath)
+		call_cmd.append("-Dlogger.file=conf/logback-test.xml")
+
+	call_cmd.append("\"{cmd} {specs}\"".format(cmd = cmd, specs = " ".join(specs)))
+
+	sbt_cmd = " ".join(call_cmd)
+
+	click.echo("[{}] {}".format(color_str('Executing', color = 'green'), sbt_cmd))
+
+	call(sbt_cmd, shell = True)
+
+
+if __name__ == "__main__":
+	cli()
