@@ -51,7 +51,7 @@ def testOnly(watch, memory, coverage):
 
 	configPath = getLogbackFile()
 
-	if configPath != None:
+	if configPath != None and not(coverage):
 		click.echo("Using logback configuration from " + configPath)
 		call_cmd.append("-Dlogger.file=conf/logback-test.xml")
 
