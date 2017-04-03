@@ -40,6 +40,30 @@ def testOnly(no_watch, specs, memory):
 
 	call(sbt_cmd, shell = True)
 
+@cli.command('test')
+@click.option("--watch", help = "Enables file watching", is_flag = True)
+@click.option("-m", "--memory", help = "Memory setting for running sbt (default is 3072 Mb)", default = 3072)
+@click.option("-c", "--coverage", help = "Run coverage report", is_flag = True)
+def testOnly(watch, memory, coverage):
+	"""Runs the whole test suite"""
+	cmd = "~test" if watch else "test" 
+	call_cmd = ["sbt", "-mem " + str(memory)]
+
+	configPath = getLogbackFile()
+
+	if configPath != None:
+		click.echo("Using logback configuration from " + configPath)
+		call_cmd.append("-Dlogger.file=conf/logback-test.xml")
+
+	final_cmd = "clean coverage {} coverageReport".format(cmd) if coverage else cmd
+
+	call_cmd.append(final_cmd)
+
+	sbt_cmd = " ".join(call_cmd)
+
+	click.echo("[{}] {}".format(color_str('Executing', color = 'green'), sbt_cmd))
+
+	call(sbt_cmd, shell = True)
 
 if __name__ == "__main__":
 	cli()
