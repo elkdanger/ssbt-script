@@ -9,6 +9,13 @@ It is assumed your system has python and pip available on the command line.
 ```
 $ git clone git@github.com:elkdanger/ssbt
 $ pip install -r requirements.txt
+$ chmod +x ssbt
+```
+
+To make the tool easier to use from anywhere, link the app to a local folder available on your path:
+
+```
+$ ln -s $(pwd)/ssbt /usr/local/bin
 ```
 
 ## Available commands
