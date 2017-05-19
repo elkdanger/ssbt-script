@@ -25,11 +25,10 @@ $ ln -s $(pwd)/ssbt /usr/local/bin
 
 ## Available commands
 
-`$ ssbt test`
+Run tests through SBT: `$ ssbt test`
 
-Runs tests
+Run with coverage: `$ ssbt test -c`
 
-`$ ssbt test-only specs.*`
+Run and set memory (in Megabytes): `$ ssbt test -m 3072`
 
-Runs only the specified tests
-
+Runs only the specified tests: `$ ssbt test-only specs.MyControllerSpec`
