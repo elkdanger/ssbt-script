@@ -4,10 +4,15 @@ A python script that wraps some commands from SBT to make them a bit easier.
 
 ## Install
 
-It is assumed your system has python and pip available on the command line.
+It is assumed your system has python available on the command line.
+
+First (if you haven't done so) install PIP: `curl https://bootstrap.pypa.io/get-pip.py | python`
+
+Then download and set up this repository:
 
 ```
 $ git clone git@github.com:elkdanger/ssbt
+$ cd ssbt
 $ pip install -r requirements.txt
 $ chmod +x ssbt
 ```
