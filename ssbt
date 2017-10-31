@@ -5,6 +5,8 @@ from subprocess import call
 import os
 from lazyme.string import color_str
 
+default_mem = 4096
+
 @click.group()
 def cli():
 	pass
@@ -19,7 +21,7 @@ def getLogbackFile():
 
 @cli.command('test-only')
 @click.option("--no-watch", help = "Disables file watching", is_flag = True)
-@click.option("-m", "--memory", help = "Memory setting for running sbt (default is 3072 Mb)", default = 3072)
+@click.option("-m", "--memory", help = "Memory setting for running sbt (default is {} Mb)".format(default_mem), default = default_mem)
 @click.argument('specs', nargs=-1)
 def testOnly(no_watch, specs, memory):
 	"""Tests only the specified specs"""
@@ -42,7 +44,7 @@ def testOnly(no_watch, specs, memory):
 
 @cli.command('test')
 @click.option("--watch", help = "Enables file watching", is_flag = True)
-@click.option("-m", "--memory", help = "Memory setting for running sbt (default is 3072 Mb)", default = 3072)
+@click.option("-m", "--memory", help = "Memory setting for running sbt (default is {} Mb)".format(default_mem), default = default_mem)
 @click.option("-c", "--coverage", help = "Run coverage report", is_flag = True)
 def testOnly(watch, memory, coverage):
 	"""Runs the whole test suite"""
